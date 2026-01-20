@@ -46,3 +46,19 @@ func (idx *Index) Save(filePath string) error{
 
 	return nil
 }
+
+func (idx *Index) AddStreamed(docChan<-chan Document){
+	var wg sync.WaitGroup
+	numWorkers = 5
+
+	for i:=0; i<numWorkers; i++{
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for doc := range docChan{
+				idx.AddDocument(doc)
+			}
+		}()
+	}
+	wg.Wait()
+}
