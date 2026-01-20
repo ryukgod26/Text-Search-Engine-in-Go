@@ -62,3 +62,22 @@ func (idx *Index) AddStreamed(docChan<-chan Document){
 	}
 	wg.Wait()
 }
+
+func (idx *Index) Search(text string) []int{
+	var result  [] int
+	for _, token := range analyze(text) {
+		idx.mu.RLock()
+		if ids, ok := idx.index[token]; ok{
+			if result == nil{
+				result = ids
+			}else {
+				result = Intersection(result, ids)
+			}
+		} else{
+			idx.mu.RUnlock()
+			return nil
+		}
+		idx.mu.RUnlock()
+	}
+	return result
+}
