@@ -41,3 +41,4 @@ func LoadDocuments(path string, docChan chan<- Document) error {
 	}
 	return nil
 }
+
