@@ -133,6 +133,22 @@ func (idx *Index) GetDocumentByID(id int) (Document, bool) {
 	return doc, exists
 }
 
-// func (idx *Index) Load(filePath string) error{
-// 	return err
-// }
+func (idx *Index) Load(filePath string) error{
+	idx.mu.Lock()
+	defer idx.mu.Unlock()
+
+	file,err := os.Open(filePath)
+	if err != nil{
+		return err
+	}
+	defer file.Close()
+	decoder := gob.NewDecoder(file)
+	if err := decoder.Decode(&idx.index); err != nil{
+		return err
+	}
+	if err := decoder.Decode(&idx.docStore); err != nil{
+		return nil
+	}
+
+	return nil
+}
