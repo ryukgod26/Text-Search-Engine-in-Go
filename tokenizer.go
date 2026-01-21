@@ -2,6 +2,7 @@ package main
 
 import(
 	"strings"
+	"unicode"
 )
 
 func analyze(text string) []string{
@@ -10,4 +11,10 @@ func analyze(text string) []string{
 	tokens = stopwordFilter(tokens)
 	tokens = stemmerFilter(tokens)
 	return tokens
+}
+
+func tokenize(text string) []string{
+	return strings.FieldsFunx(text,func(r rune) bool{
+		return !unicode.IsLetter(r) && !IsNumber(r)
+	})
 }
