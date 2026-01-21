@@ -28,7 +28,7 @@ func (idx *Index) AddDocument(doc Document) {
 	idx.docStore[doc.ID] = doc
 	for _, token := range analyze(doc.Text) {
 		ids := idx.index[token]
-		if ids != nil && ids[len(ids-1)] == doc.ID {
+		if ids != nil && ids[len(ids)-1] == doc.ID {
 			continue
 		}
 		idx.index[token] = append(ids, doc.ID)
@@ -123,4 +123,12 @@ func Intersection(a, b []int) []int {
 		}
 	}
 	return result
+}
+
+func (idx *Index) GetDocumentByID(id int) (Document, bool) {
+	idx.mu.RLock()
+	defer idx.mu.RUnlock()
+
+	doc, exists := idx.docStore[id]
+	return doc, exists
 }
