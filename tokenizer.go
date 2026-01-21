@@ -14,7 +14,7 @@ func analyze(text string) []string{
 }
 
 func tokenize(text string) []string{
-	return strings.FieldsFunx(text,func(r rune) bool{
-		return !unicode.IsLetter(r) && !IsNumber(r)
+	return strings.FieldsFunc(text,func(r rune) bool{
+		return !unicode.IsLetter(r) && !unicode.IsNumber(r)
 	})
 }
