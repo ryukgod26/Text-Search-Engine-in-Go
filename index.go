@@ -132,3 +132,7 @@ func (idx *Index) GetDocumentByID(id int) (Document, bool) {
 	doc, exists := idx.docStore[id]
 	return doc, exists
 }
+
+// func (idx *Index) Load(filePath string) error{
+// 	return err
+// }

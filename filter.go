@@ -7,17 +7,17 @@ import (
 
 func lowercaseFilter(tokens []string) []string {
 	r := make([]string, len(tokens))
-	for i, token = range tokens {
+	for i, token := range tokens {
 		r[i] = strings.ToLower(token)
 	}
 	return r
 }
 
 func stopwordFilter(tokens []string) []string{
-	var stopwords = map[string]struct(){
+	var stopwords = map[string]struct{}{
 		"a":{}, "and":{}, "be":{}, "have":{},
 		"i":{}, "in":{}, "the":{}, "to":{},
-		"of":{}, "that":{}
+		"of":{}, "that":{},
 	}
 	r := make([]string,0,len(tokens))
 	for _,token := range tokens{

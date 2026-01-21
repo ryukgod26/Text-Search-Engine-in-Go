@@ -7,9 +7,9 @@ import (
 )
 
 type Document struct{
-	Title string `xml: "title"`
-	URL string `xml: "url"`
-	Text string `xml: "abstract"`
+	Title string `xml:"title"`
+	URL string `xml:"url"`
+	Text string `xml:"abstract"`
 	ID int
 }
 
@@ -18,6 +18,8 @@ func LoadDocuments(path string, docChan chan<- Document) error {
 	if err != nil{
 		return err
 	}
+
+	defer f.Close()
 
 	gz, err := gzip.NewReader(f)
 	if err !=nil{
