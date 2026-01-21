@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/gob"
+	"fmt"
+	"strings"
 )
 
 type Index struct{
@@ -80,4 +82,19 @@ func (idx *Index) Search(text string) []int{
 		idx.mu.RUnlock()
 	}
 	return result
+}
+
+func (idx *Index) PrintResultsTable(matchedIDs []int){
+	fmt.Printf("\n%-10s | %-40s | %s\n", "Doc Id","Title","Snippet")
+	fmt.Println(strings.Repeat("-",105)
+	for _,id := range matchedIDs {
+		if doc, found := idx.GetDocumentByID(id); found{
+			snippet := doc.Text
+			if len(snippet) > 50{
+				snippet = snippet[:47] + "..."
+			}
+			fmt.Printf"%-10d | %-40s | %s\n",doc.ID,doc.Title,snippet)
+		}
+	}
+	fmt.Println(strings.Repeat("-",105)
 }
