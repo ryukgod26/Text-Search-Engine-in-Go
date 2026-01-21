@@ -24,7 +24,7 @@ func main() {
 	start := time.Now()
 
 	if err := idx.Load(indexPath); err == nil{
-		log.Printf("Loaded Index form 5s into %v",indexPath,time.Since(start))
+		log.Printf("Loaded Index form %s into %v",indexPath,time.Since(start))
 	}else{
 		var wg sync.WaitGroup
 		docChan := make(chan Document,100)
@@ -51,7 +51,7 @@ func main() {
 		if err := idx.Save(indexPath); idx != nil{
 			log.Fatalf("Failed to Save Index: %v", err)
 		}
-		log.Printf("Saved Index to %s",&indexPath)
+		log.Printf("Saved Index to %s",indexPath)
 	}
 
 	matchedIDs := idx.Search(query)
